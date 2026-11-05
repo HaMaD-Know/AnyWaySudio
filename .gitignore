@@ -1,0 +1,9 @@
+node_modules
+dist
+build
+*.ipa
+ios/App/Pods
+ios/App/App/public
+ios/App/App/capacitor.config.json
+ios/App/App/config.xml
+.DS_Store

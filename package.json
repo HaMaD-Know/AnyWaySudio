@@ -1,0 +1,31 @@
+{
+  "name": "anyway-studio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host",
+    "icons": "node scripts/make-icons.mjs",
+    "test": "tsx tests/roundtrip.test.ts"
+  },
+  "dependencies": {
+    "@capacitor/browser": "^7.0.5",
+    "@capacitor/core": "^7.6.10",
+    "@capacitor/filesystem": "^7.1.9",
+    "@capacitor/ios": "^7.6.10",
+    "@capacitor/share": "^7.0.4",
+    "cannon-es": "^0.20.0",
+    "fengari": "^0.1.5",
+    "fzstd": "^0.1.1",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.6.10",
+    "@types/three": "^0.187.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.6"
+  }
+}

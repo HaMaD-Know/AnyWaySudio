@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b1d6b"/>
+      <stop offset="0.55" stop-color="#4b2bb8"/>
+      <stop offset="1" stop-color="#0f9bd8"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.55">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b8f3ff"/>
+      <stop offset="1" stop-color="#6fe0ff"/>
+    </linearGradient>
+    <linearGradient id="left" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2fd3c0"/>
+      <stop offset="1" stop-color="#14a89a"/>
+    </linearGradient>
+    <linearGradient id="right" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3b82ff"/>
+      <stop offset="1" stop-color="#2557d6"/>
+    </linearGradient>
+    <linearGradient id="play" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffc24b"/>
+      <stop offset="1" stop-color="#ff7a2f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="0" fill="url(#bg)"/>
+  <rect width="1024" height="1024" fill="url(#glow)"/>
+  <!-- grid floor -->
+  <g stroke="#ffffff" stroke-opacity="0.10" stroke-width="6" fill="none">
+    <path d="M152 700 L512 900 L872 700"/>
+    <path d="M232 656 L512 812 L792 656"/>
+    <path d="M312 612 L512 724 L712 612"/>
+  </g>
+  <!-- isometric build cube -->
+  <g stroke="#0b1030" stroke-opacity="0.25" stroke-width="10" stroke-linejoin="round">
+    <path d="M512 196 L782 346 L512 496 L242 346 Z" fill="url(#top)"/>
+    <path d="M242 346 L512 496 L512 806 L242 656 Z" fill="url(#left)"/>
+    <path d="M782 346 L512 496 L512 806 L782 656 Z" fill="url(#right)"/>
+  </g>
+  <!-- stud-free top highlight & bevel lines -->
+  <path d="M512 252 L680 346 L512 440 L344 346 Z" fill="#ffffff" fill-opacity="0.22"/>
+  <path d="M512 496 L512 806" stroke="#ffffff" stroke-opacity="0.35" stroke-width="8"/>
+  <!-- play badge -->
+  <circle cx="770" cy="760" r="150" fill="#0b1030" fill-opacity="0.35"/>
+  <circle cx="760" cy="748" r="140" fill="url(#play)"/>
+  <path d="M722 676 L722 820 L838 748 Z" fill="#ffffff"/>
+</svg>

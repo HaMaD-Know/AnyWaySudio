@@ -1,0 +1,10 @@
+{
+  "appId": "com.anyway.studio",
+  "appName": "AnyWay Studio",
+  "webDir": "dist",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#14161f",
+    "scrollEnabled": false
+  }
+}

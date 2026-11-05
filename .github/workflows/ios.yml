@@ -1,0 +1,65 @@
+name: Build iOS IPA
+
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+
+jobs:
+  ipa:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test file-format code
+        run: npm test
+
+      - name: Build web app
+        run: npm run build
+
+      - name: Create / sync the iOS project
+        run: |
+          [ -d ios ] || npx cap add ios
+          npx cap sync ios
+
+      - name: App icon, splash and Info.plist
+        run: |
+          ICONSET=ios/App/App/Assets.xcassets/AppIcon.appiconset
+          cp assets/AppIcon-1024.png "$ICONSET/AppIcon-512@2x.png"
+          SPLASH=ios/App/App/Assets.xcassets/Splash.imageset
+          for f in splash-2732x2732.png splash-2732x2732-1.png splash-2732x2732-2.png; do cp assets/splash-2732.png "$SPLASH/$f"; done
+          PLIST=ios/App/App/Info.plist
+          /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName 'AnyWay Studio'" "$PLIST" || /usr/libexec/PlistBuddy -c "Add :CFBundleDisplayName string 'AnyWay Studio'" "$PLIST"
+          # Saved places show up in the Files app (On My iPhone › AnyWay Studio)
+          /usr/libexec/PlistBuddy -c "Add :UIFileSharingEnabled bool true" "$PLIST" || true
+          /usr/libexec/PlistBuddy -c "Add :LSSupportsOpeningDocumentsInPlace bool true" "$PLIST" || true
+          /usr/libexec/PlistBuddy -c "Add :UISupportsDocumentBrowser bool true" "$PLIST" || true
+          /usr/libexec/PlistBuddy -c "Add :UIRequiresFullScreen bool true" "$PLIST" || true
+
+      - name: Build unsigned app
+        run: |
+          xcodebuild -workspace ios/App/App.xcworkspace -scheme App -configuration Release \
+            -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build | tail -n 40
+
+      - name: Package IPA
+        run: |
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/App.app Payload/
+          zip -qry AnyWayStudio-unsigned.ipa Payload
+          ls -lh AnyWayStudio-unsigned.ipa
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AnyWayStudio-ipa
+          path: AnyWayStudio-unsigned.ipa
+          retention-days: 30
